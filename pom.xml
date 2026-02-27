@@ -5,22 +5,31 @@
     <artifactId>E-Company</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <dependencies>
+
+    <dependencies> <dependency>
+        <groupId>com.mysql</groupId>
+        <artifactId>mysql-connector-j</artifactId>
+        <version>9.5.0</version>
+    </dependency>
         <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>9.5.0</version>
-        </dependency>
-        <dependency>
-    <groupId>com.formdev</groupId>
-    <artifactId>flatlaf</artifactId>
-    <version>3.6</version>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.6</version>
             <type>jar</type>
         </dependency>
-    </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>24</maven.compiler.release>
-        <exec.mainClass>com.mycompany.e.company.ECompany</exec.mainClass>
-    </properties>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>21</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>21</version>
+        </dependency>
+    </dependencies> <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>24</maven.compiler.release>
+    <exec.mainClass>com.mycompany.e.company.ECompany</exec.mainClass>
+</properties>
 </project>

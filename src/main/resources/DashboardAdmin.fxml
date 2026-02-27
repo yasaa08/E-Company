@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:id="mainBorderPane"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.mycompany.e.company.controller.DashboardAdminController"
+            stylesheets="@style.css"
+            styleClass="root">
+
+    <left>
+        <VBox styleClass="sidebar" prefWidth="260" spacing="10">
+            <Label text="E-Company" styleClass="sidebar-title"/>
+            <Separator style="-fx-opacity: 0.2;"/>
+
+            <Button text="🏠 Dashboard" onAction="#handleShowDashboard" maxWidth="Infinity" styleClass="btn-sidebar"/>
+            <Button text="👥 Data Karyawan" onAction="#handleShowEmployeeData" maxWidth="Infinity" styleClass="btn-sidebar"/>
+            <Button text="💸 Penggajian (Payroll)" onAction="#handleShowPayroll" maxWidth="Infinity" styleClass="btn-sidebar"/>
+            <Button text="📅 Cuti &amp; Ijin" maxWidth="Infinity" styleClass="btn-sidebar"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <VBox spacing="5" style="-fx-padding: 10; -fx-background-color: rgba(0,0,0,0.1); -fx-background-radius: 8;">
+                <Label text="Logged in as:" style="-fx-text-fill: #bbdefb; -fx-font-size: 11px;"/>
+                <Label fx:id="lblCompanyName" text="Loading..." style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+            </VBox>
+
+            <Button text="Logout" onAction="#handleLogout" maxWidth="Infinity" styleClass="btn-logout"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox fx:id="dashboardContent" spacing="30" style="-fx-padding: 40;">
+            <HBox alignment="CENTER_LEFT">
+                <Label text="Dashboard Overview" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+            </HBox>
+
+            <HBox spacing="25">
+                <VBox styleClass="card-info" prefWidth="320">
+                    <Label text="UMR Live" styleClass="card-title"/>
+                    <Label fx:id="lblUmrValue" text="Rp 0" styleClass="card-value"/>
+                    <Label fx:id="lblRegionName" text="Memuat Lokasi..." style="-fx-text-fill: #999;"/>
+                </VBox>
+
+                <VBox styleClass="card-info" prefWidth="320">
+                    <Label text="Total Karyawan Aktif" styleClass="card-title"/>
+                    <Label fx:id="lblTotalEmployees" text="0 Orang" styleClass="card-value"/>
+                    <Label text="Data Real-time" style="-fx-text-fill: #999;"/>
+                </VBox>
+            </HBox>
+
+            <VBox styleClass="card-info" VBox.vgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Data Karyawan Terbaru" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label text="(Klik tabel untuk lihat detail)" style="-fx-font-size: 12px; -fx-text-fill: #999; -fx-font-style: italic;"/>
+                </HBox>
+                <Separator style="-fx-padding: 10 0 10 0;"/>
+
+                <TableView fx:id="tableEmployees" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colName" text="Nama Lengkap" prefWidth="180"/>
+                        <TableColumn fx:id="colJabatan" text="Jabatan" prefWidth="120"/>
+                        <TableColumn fx:id="colStatus" text="Status" prefWidth="80"/>
+                        <TableColumn fx:id="colGaji" text="Gaji Pokok" prefWidth="120"/>
+                        <TableColumn fx:id="colRegion" text="Lokasi" prefWidth="100"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

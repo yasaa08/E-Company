@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.mycompany.e.company.controller.RegisterController"
+           stylesheets="@style.css"
+           styleClass="root">
+
+    <VBox alignment="CENTER" spacing="15" maxWidth="420" style="-fx-background-color: white; -fx-padding: 40; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0, 0, 5);">
+
+        <Label text="REGISTER COMPANY" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #304ffe;"/>
+        <Separator/>
+
+        <VBox spacing="8">
+            <Label text="Nama Perusahaan"/>
+            <TextField fx:id="txtCompanyName" promptText="Contoh: PT. Maju Mundur"/>
+
+            <Label text="Alamat Lengkap"/>
+            <TextArea fx:id="txtCompanyAddress" promptText="Jl. Sudirman No. 1..." prefHeight="60" wrapText="true"/>
+
+            <Label text="Kota / Region (Menentukan UMR)"/>
+            <ComboBox fx:id="cmbRegion" promptText="Pilih Lokasi Perusahaan" maxWidth="Infinity"/>
+
+            <Label text="Username Admin"/>
+            <TextField fx:id="txtAdminUser" promptText="Buat username admin"/>
+
+            <Label text="Password"/>
+            <PasswordField fx:id="txtAdminPass" promptText="Buat password"/>
+        </VBox>
+
+        <Button text="DAFTAR SEKARANG" onAction="#handleRegister" styleClass="btn-primary" maxWidth="Infinity" style="-fx-font-size: 14;"/>
+
+        <Hyperlink text="Sudah punya akun? Login disini" onAction="#handleBackToLogin" style="-fx-text-fill: #304ffe;"/>
+
+    </VBox>
+
+</StackPane>

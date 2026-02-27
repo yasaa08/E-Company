@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycompany.e.company.controller.InputEmployeeController"
+      spacing="20" alignment="TOP_CENTER"
+      stylesheets="@style.css"
+      style="-fx-padding: 30; -fx-background-color: white;">
+
+    <VBox spacing="5" alignment="CENTER_LEFT">
+        <Label text="Tambah Karyawan" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #304ffe;"/>
+        <Label text="Lengkapi data karyawan baru di bawah ini." style="-fx-text-fill: #757575;"/>
+        <Separator style="-fx-padding: 10 0 10 0;"/>
+    </VBox>
+
+    <GridPane hgap="15" vgap="15">
+        <Label text="Nama Lengkap" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtNama" promptText="Sesuai KTP" style="-fx-background-radius: 5; -fx-border-color: #E0E0E0; -fx-border-radius: 5;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Jabatan / Posisi" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtJabatan" promptText="Contoh: Staff Admin" style="-fx-background-radius: 5; -fx-border-color: #E0E0E0; -fx-border-radius: 5;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Status Keluarga" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cmbStatus" promptText="Pilih Status" maxWidth="Infinity" style="-fx-background-color: #FAFAFA; -fx-border-color: #E0E0E0; -fx-border-radius: 5;" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Jumlah Anak" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtAnak" promptText="0" style="-fx-background-radius: 5; -fx-border-color: #E0E0E0; -fx-border-radius: 5;" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Gaji Pokok (Rp)" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtGaji" promptText="Tanpa titik/koma" style="-fx-background-radius: 5; -fx-border-color: #E0E0E0; -fx-border-radius: 5;" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Tanggal Masuk" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dpJoinDate" maxWidth="Infinity" style="-fx-border-color: #E0E0E0; -fx-border-radius: 5;" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <Separator style="-fx-opacity: 0.5;"/>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Batal" onAction="#handleCancel" styleClass="btn-secondary" prefWidth="100"/>
+        <Button text="Simpan Data" onAction="#handleSave" styleClass="btn-primary" prefWidth="150" style="-fx-effect: dropshadow(three-pass-box, rgba(48, 79, 254, 0.3), 10, 0, 0, 4);"/>
+    </HBox>
+
+</VBox>

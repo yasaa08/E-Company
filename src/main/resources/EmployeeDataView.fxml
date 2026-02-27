@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycompany.e.company.controller.EmployeeDataController"
+      spacing="20" style="-fx-padding: 30;" stylesheets="@style.css">
+
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <VBox>
+            <Label text="Data Karyawan" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #304ffe;"/>
+            <Label text="Kelola data karyawan perusahaan anda" style="-fx-text-fill: #757575;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Button text="+ Tambah Karyawan" onAction="#handleTambahKaryawan" styleClass="btn-primary" style="-fx-font-weight: bold;"/>
+    </HBox>
+
+    <Separator/>
+
+    <VBox styleClass="card-info" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tableEmployees" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colName" text="Nama Lengkap" prefWidth="180"/>
+                <TableColumn fx:id="colJabatan" text="Jabatan" prefWidth="120"/>
+                <TableColumn fx:id="colStatus" text="Status" prefWidth="80"/>
+                <TableColumn fx:id="colAnak" text="Anak" prefWidth="60"/>
+                <TableColumn fx:id="colJoinDate" text="Tgl Masuk" prefWidth="100"/>
+                <TableColumn fx:id="colGaji" text="Gaji Pokok" prefWidth="120"/>
+                <TableColumn fx:id="colRegion" text="Lokasi" prefWidth="100"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+    </VBox>
+</VBox>

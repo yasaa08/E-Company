@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.mycompany.e.company.controller.PayrollController"
+            stylesheets="@style.css" styleClass="root">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" style="-fx-padding: 20 40 10 40;">
+            <Label text="Penggajian &amp; Pajak (Payroll)" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #304ffe;"/>
+        </HBox>
+    </top>
+
+    <center>
+        <HBox spacing="25" style="-fx-padding: 10 40 40 40;">
+
+            <VBox styleClass="card-info" prefWidth="320" minWidth="300" spacing="15">
+                <Label text="1. Pilih Karyawan" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+                <Separator/>
+                <Label text="Klik nama untuk menghitung gaji:" style="-fx-text-fill: #999; -fx-font-size: 12px;"/>
+
+                <ListView fx:id="listEmployees" VBox.vgrow="ALWAYS"/>
+            </VBox>
+
+            <VBox styleClass="card-info" HBox.hgrow="ALWAYS" spacing="20">
+                <Label text="2. Rincian Gaji" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+                <Separator/>
+
+                <GridPane vgap="15" hgap="20">
+                    <Label text="Nama Karyawan" style="-fx-text-fill: #757575;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblNama" text="-" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #304ffe;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Gaji Pokok" style="-fx-text-fill: #757575;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtGajiPokok" editable="false" style="-fx-background-color: #F5F5F5;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Tunjangan Tambahan" style="-fx-text-fill: #757575;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtTunjangan" text="0" onKeyTyped="#hitungTotal" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Uang Lembur" style="-fx-text-fill: #757575;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtLembur" text="0" onKeyTyped="#hitungTotal" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Separator GridPane.rowIndex="4" GridPane.columnSpan="2" style="-fx-opacity: 0.5;"/>
+
+                    <Label text="Potongan BPJS (3%)" style="-fx-text-fill: #757575;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtBPJS" editable="false" style="-fx-text-fill: #D32F2F;" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                    <Label text="Pajak (PPh 21)" style="-fx-text-fill: #757575;" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtPajak" editable="false" style="-fx-text-fill: #D32F2F;" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                </GridPane>
+
+                <VBox style="-fx-background-color: #E8EAF6; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #304ffe; -fx-border-radius: 8; -fx-border-width: 0.5;">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="TOTAL TAKE HOME PAY:" style="-fx-font-weight: bold; -fx-text-fill: #304ffe;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblTotalGaji" text="Rp 0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #00C853;"/>
+                    </HBox>
+                </VBox>
+
+                <HBox spacing="15" alignment="CENTER_RIGHT" VBox.vgrow="ALWAYS">
+                    <Button text="Reset Form" onAction="#handleReset" styleClass="btn-secondary" prefWidth="120"/>
+                    <Button text="✔ Bayar &amp; Simpan Data" onAction="#handleBayar" styleClass="btn-primary" prefWidth="200" style="-fx-padding: 12 20; -fx-font-size: 14px;"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </center>
+</BorderPane>
