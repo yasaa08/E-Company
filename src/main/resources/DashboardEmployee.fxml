@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane fx:id="mainBorderPane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.mycompany.e.company.controller.DashboardEmployeeController"
+            stylesheets="@style.css" styleClass="root">
+
+    <left>
+        <VBox styleClass="sidebar" prefWidth="260" spacing="10">
+            <Label text="E-Company" styleClass="sidebar-title"/>
+            <Separator style="-fx-opacity: 0.2;"/>
+
+            <Button text="🏠 Dashboard" onAction="#handleShowDashboard" maxWidth="Infinity" styleClass="btn-sidebar"/>
+            <Button text="📝 Pengajuan Cuti" onAction="#handleShowPengajuanCuti" maxWidth="Infinity" styleClass="btn-sidebar"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <VBox spacing="5" style="-fx-padding: 10; -fx-background-color: rgba(0,0,0,0.1); -fx-background-radius: 8;">
+                <Label text="Masuk sebagai:" style="-fx-text-fill: #bbdefb; -fx-font-size: 11px;"/>
+                <Label fx:id="lblUsername" text="Nama User" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+            </VBox>
+
+            <Button text="Logout" onAction="#handleLogout" maxWidth="Infinity" styleClass="btn-logout"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox fx:id="contentArea" spacing="30" style="-fx-padding: 40;">
+            <Label text="Selamat Datang di Portal Karyawan" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #304ffe;"/>
+
+            <Separator/>
+
+            <GridPane hgap="20" vgap="20">
+                <VBox styleClass="card-info" GridPane.rowIndex="0" GridPane.columnIndex="0" prefWidth="300" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+                    <Label text="Jabatan Anda" style="-fx-text-fill: #757575;"/>
+                    <Label fx:id="lblJabatan" text="-" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                </VBox>
+
+                <VBox styleClass="card-info" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="300" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+                    <Label text="Lokasi Kerja" style="-fx-text-fill: #757575;"/>
+                    <Label fx:id="lblLokasi" text="-" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                </VBox>
+
+                <VBox styleClass="card-info" GridPane.rowIndex="1" GridPane.columnIndex="0" prefWidth="300" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+                    <Label text="Status Gaji Bulan Ini" style="-fx-text-fill: #757575;"/>
+                    <Label fx:id="lblStatusGaji" text="-" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #00c853;"/>
+                </VBox>
+
+                <VBox styleClass="card-info" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="300" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+                    <Label text="Cuti Disetujui (Tahun Ini)" style="-fx-text-fill: #757575;"/>
+                    <Label fx:id="lblTotalCuti" text="-" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ff3d00;"/>
+                </VBox>
+            </GridPane>
+        </VBox>
+    </center>
+</BorderPane>

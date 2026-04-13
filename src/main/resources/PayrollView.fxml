@@ -48,6 +48,9 @@
 
                     <Label text="Pajak (PPh 21)" style="-fx-text-fill: #757575;" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
                     <TextField fx:id="txtPajak" editable="false" style="-fx-text-fill: #D32F2F;" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                    <Label text="Info Rekening" style="-fx-text-fill: #757575;" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblRekening" text="-" style="-fx-font-weight: bold; -fx-text-fill: #333;" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
                 </GridPane>
 
                 <VBox style="-fx-background-color: #E8EAF6; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #304ffe; -fx-border-radius: 8; -fx-border-width: 0.5;">

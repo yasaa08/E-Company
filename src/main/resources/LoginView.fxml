@@ -19,6 +19,7 @@
         <PasswordField fx:id="txtPassword" promptText="Password" />
     </VBox>
 
+        <ComboBox fx:id="cmbRole" promptText="Login Sebagai..." maxWidth="Infinity" styleClass="combo-box"/>
     <Button text="LOGIN" onAction="#handleLogin" styleClass="btn-primary" maxWidth="Infinity"/>
 
     <Hyperlink text="Don't have an account? Sign Up" onAction="#bukaRegister" styleClass="link-text"/>

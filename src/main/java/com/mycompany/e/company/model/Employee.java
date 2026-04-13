@@ -10,20 +10,22 @@ public class Employee {
     private final StringProperty maritalStatus;
     private final DoubleProperty baseSalary;
     private final StringProperty region;
+    private final StringProperty accountNumber;
+    private final StringProperty phoneNumber;
 
     // Tambahan Data HRIS
     private final StringProperty joinDate;
     private final IntegerProperty childCount;
 
-    public Employee(int id, String name, String pos, String status, double salary, String reg, Date join, int child) {
+    public Employee(int id, String name, String pos, String status, double salary, String reg, Date join, int child, String acc, String phone) {
         this.employeeId = new SimpleIntegerProperty(id);
         this.fullName = new SimpleStringProperty(name);
         this.position = new SimpleStringProperty(pos);
         this.maritalStatus = new SimpleStringProperty(status);
         this.baseSalary = new SimpleDoubleProperty(salary);
         this.region = new SimpleStringProperty(reg);
-
-        // Konversi Date ke String biar mudah ditampilkan
+        this.accountNumber = new SimpleStringProperty(acc != null ? acc : "-");
+        this.phoneNumber = new SimpleStringProperty(phone != null ? phone : "");
         this.joinDate = new SimpleStringProperty(join != null ? join.toString() : "-");
         this.childCount = new SimpleIntegerProperty(child);
     }
@@ -36,4 +38,6 @@ public class Employee {
     public StringProperty regionProperty() { return region; }
     public StringProperty joinDateProperty() { return joinDate; }
     public IntegerProperty childCountProperty() { return childCount; }
+    public StringProperty accountNumberProperty() { return accountNumber; }
+    public StringProperty phoneNumberProperty() { return phoneNumber; }
 }

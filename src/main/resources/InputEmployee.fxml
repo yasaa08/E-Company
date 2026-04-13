@@ -27,14 +27,17 @@
         <Label text="Status Keluarga" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
         <ComboBox fx:id="cmbStatus" promptText="Pilih Status" maxWidth="Infinity" style="-fx-background-color: #FAFAFA; -fx-border-color: #E0E0E0; -fx-border-radius: 5;" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-        <Label text="Jumlah Anak" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtAnak" promptText="0" style="-fx-background-radius: 5; -fx-border-color: #E0E0E0; -fx-border-radius: 5;" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        <Label text="Gaji Pokok (Rp)" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtGaji" promptText="Tanpa titik/koma" style="-fx-background-radius: 5; -fx-border-color: #E0E0E0; -fx-border-radius: 5;" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-        <Label text="Gaji Pokok (Rp)" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtGaji" promptText="Tanpa titik/koma" style="-fx-background-radius: 5; -fx-border-color: #E0E0E0; -fx-border-radius: 5;" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        <Label text="Tanggal Masuk" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dpJoinDate" maxWidth="Infinity" style="-fx-border-color: #E0E0E0; -fx-border-radius: 5;" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-        <Label text="Tanggal Masuk" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="dpJoinDate" maxWidth="Infinity" style="-fx-border-color: #E0E0E0; -fx-border-radius: 5;" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        <Label text="Nomor Rekening" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtRekening" promptText="Contoh: 12345678" style="-fx-background-radius: 5;" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+        <Label text="Nomor WhatsApp" style="-fx-font-weight: bold; -fx-text-fill: #424242;" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtWa" promptText="Contoh: 62812xxx" style="-fx-background-radius: 5;" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
     </GridPane>
 
     <Separator style="-fx-opacity: 0.5;"/>

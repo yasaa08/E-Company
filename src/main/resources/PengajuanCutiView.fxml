@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycompany.e.company.controller.PengajuanCutiController"
+      spacing="20" style="-fx-padding: 40;" stylesheets="@style.css">
+
+    <VBox spacing="5">
+        <Label text="Form Pengajuan Cuti &amp; Ijin" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #304ffe;"/>
+        <Label text="Pengajuan otomatis akan menggunakan data akun Anda." style="-fx-text-fill: #757575;"/>
+    </VBox>
+    <Separator/>
+
+    <GridPane vgap="15" hgap="20" styleClass="card-info">
+        <Label text="Jenis Pengajuan" style="-fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cmbTipeCuti" promptText="Pilih Jenis Cuti" prefWidth="300" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Tanggal Mulai" style="-fx-font-weight: bold;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dpMulai" prefWidth="300" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Tanggal Selesai" style="-fx-font-weight: bold;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dpSelesai" prefWidth="300" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Alasan / Keterangan" style="-fx-font-weight: bold;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextArea fx:id="txtAlasan" promptText="Tuliskan alasan lengkap Anda..." prefWidth="300" prefHeight="80" wrapText="true" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox alignment="CENTER_RIGHT" spacing="15">
+        <Button text="Kirim Pengajuan" onAction="#handleAjukan" styleClass="btn-primary" style="-fx-padding: 10 20; -fx-font-weight: bold;"/>
+    </HBox>
+</VBox>

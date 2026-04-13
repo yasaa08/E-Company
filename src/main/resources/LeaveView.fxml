@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycompany.e.company.controller.LeaveController"
+      spacing="20" style="-fx-padding: 30;" stylesheets="@style.css">
+
+    <VBox>
+        <Label text="Persetujuan Cuti &amp; Ijin" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #304ffe;"/>
+        <Label text="Kelola pengajuan cuti dan ijin karyawan di sini" style="-fx-text-fill: #757575;"/>
+    </VBox>
+
+    <Separator/>
+
+    <VBox styleClass="card-info" VBox.vgrow="ALWAYS" spacing="15">
+        <Label text="Daftar Pengajuan" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+        <TableView fx:id="tableLeaves" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colName" text="Nama Karyawan" prefWidth="150"/>
+                <TableColumn fx:id="colType" text="Jenis Cuti" prefWidth="100"/>
+                <TableColumn fx:id="colStart" text="Tgl Mulai" prefWidth="100"/>
+                <TableColumn fx:id="colEnd" text="Tgl Selesai" prefWidth="100"/>
+                <TableColumn fx:id="colReason" text="Alasan" prefWidth="200"/>
+                <TableColumn fx:id="colStatus" text="Status" prefWidth="100"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+
+        <HBox spacing="15" alignment="CENTER_RIGHT">
+            <Button text="✖ Tolak Pengajuan" onAction="#handleReject" style="-fx-background-color: #FF5252; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15; -fx-background-radius: 6;"/>
+            <Button text="✔ Setujui Pengajuan" onAction="#handleApprove" styleClass="btn-primary" style="-fx-padding: 8 15;"/>
+        </HBox>
+    </VBox>
+</VBox>

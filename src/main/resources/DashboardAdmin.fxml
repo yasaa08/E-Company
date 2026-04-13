@@ -18,7 +18,8 @@
             <Button text="🏠 Dashboard" onAction="#handleShowDashboard" maxWidth="Infinity" styleClass="btn-sidebar"/>
             <Button text="👥 Data Karyawan" onAction="#handleShowEmployeeData" maxWidth="Infinity" styleClass="btn-sidebar"/>
             <Button text="💸 Penggajian (Payroll)" onAction="#handleShowPayroll" maxWidth="Infinity" styleClass="btn-sidebar"/>
-            <Button text="📅 Cuti &amp; Ijin" maxWidth="Infinity" styleClass="btn-sidebar"/>
+            <Button text="🕑 Riwayat Gaji" onAction="#handleShowPayrollHistory" maxWidth="Infinity" styleClass="btn-sidebar"/>
+            <Button text="📅 Cuti &amp; Ijin" onAction="#handleShowLeave" maxWidth="Infinity" styleClass="btn-sidebar"/>
 
             <Region VBox.vgrow="ALWAYS"/>
 

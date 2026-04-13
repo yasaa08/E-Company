@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycompany.e.company.controller.PayrollHistoryController"
+      spacing="20" style="-fx-padding: 30;" stylesheets="@style.css">
+
+    <VBox>
+        <Label text="Riwayat Penggajian" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #304ffe;"/>
+        <Label text="Daftar seluruh pembayaran gaji yang telah dilakukan" style="-fx-text-fill: #757575;"/>
+    </VBox>
+
+    <Separator/>
+
+    <VBox styleClass="card-info" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tablePayroll" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colID" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="colName" text="Nama Karyawan" prefWidth="180"/>
+                <TableColumn fx:id="colBulan" text="Periode" prefWidth="120"/>
+                <TableColumn fx:id="colGapok" text="Gaji Pokok" prefWidth="120"/>
+                <TableColumn fx:id="colPotongan" text="Potongan" prefWidth="100"/>
+                <TableColumn fx:id="colTotal" text="Total Bersih" prefWidth="130"/>
+                <TableColumn fx:id="colStatus" text="Status" prefWidth="100"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+    </VBox>
+</VBox>

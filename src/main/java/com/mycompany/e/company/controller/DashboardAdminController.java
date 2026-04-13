@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -48,10 +49,8 @@ public class DashboardAdminController implements Initializable {
         setupTable();
         loadData();
 
-        // LOGIC BARU: Kalau tabel diklik, pindah ke halaman "Data Karyawan" yang lengkap
         tableEmployees.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1 || event.getClickCount() == 2) {
-                // Panggil method pindah halaman
                 handleShowEmployeeData(null);
             }
         });
@@ -63,21 +62,31 @@ public class DashboardAdminController implements Initializable {
         colStatus.setCellValueFactory(cellData -> cellData.getValue().maritalStatusProperty());
         colGaji.setCellValueFactory(cellData -> cellData.getValue().baseSalaryProperty());
         colRegion.setCellValueFactory(cellData -> cellData.getValue().regionProperty());
+
+        // Format angka menjadi Rupiah agar tidak 2.0E7
+        colGaji.setCellFactory(column -> new TableCell<Employee, Number>() {
+            private final NumberFormat formatRp = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+            @Override
+            protected void updateItem(Number item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(formatRp.format(item.doubleValue()));
+                }
+            }
+        });
     }
 
     private void loadData() {
         int currentCompanyId = UserSession.getCompanyId();
         loadDashboardStats(currentCompanyId);
-
-        // Load data karyawan ke tabel dashboard
         tableEmployees.setItems(EmployeeDAO.getEmployeesByCompany(currentCompanyId));
     }
 
     private void loadDashboardStats(int companyId) {
         try {
             Connection conn = koneksi.configDB();
-
-            // 1. Info Company & UMR
             String sqlInfo = "SELECT c.company_name, r.region_name, r.umr_value " +
                     "FROM companies c " +
                     "JOIN regions r ON c.region_id = r.region_id " +
@@ -94,7 +103,6 @@ public class DashboardAdminController implements Initializable {
                 lblUmrValue.setText(formatRp.format(umr));
             }
 
-            // 2. Total Employees
             String sqlCount = "SELECT COUNT(*) as total FROM employees WHERE company_id = ?";
             PreparedStatement pstCount = conn.prepareStatement(sqlCount);
             pstCount.setInt(1, companyId);
@@ -109,13 +117,11 @@ public class DashboardAdminController implements Initializable {
         }
     }
 
-    // --- NAVIGASI SIDEBAR ---
-
     @FXML
     private void handleShowDashboard(ActionEvent event) {
         if (mainBorderPane != null && dashboardContent != null) {
             mainBorderPane.setCenter(dashboardContent);
-            loadData(); // Refresh data dashboard
+            loadData();
         }
     }
 
@@ -129,7 +135,16 @@ public class DashboardAdminController implements Initializable {
         loadPage("/PayrollView.fxml");
     }
 
-    // Helper load page
+    @FXML
+    private void handleShowPayrollHistory(ActionEvent event) {
+        loadPage("/PayrollHistoryView.fxml");
+    }
+
+    @FXML
+    private void handleShowLeave(ActionEvent event) {
+        loadPage("/LeaveView.fxml");
+    }
+
     private void loadPage(String fxmlFile) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -153,9 +168,9 @@ public class DashboardAdminController implements Initializable {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("/LoginView.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.centerOnScreen();
-                stage.show();
+
+                // Ganti isinya kembali ke halaman login TANPA merubah ukuran
+                stage.getScene().setRoot(root);
             } catch (IOException e) { e.printStackTrace(); }
         }
     }
