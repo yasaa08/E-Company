@@ -9,6 +9,9 @@
     <VBox>
         <Label text="Riwayat Penggajian" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #304ffe;"/>
         <Label text="Daftar seluruh pembayaran gaji yang telah dilakukan" style="-fx-text-fill: #757575;"/>
+        <HBox alignment="CENTER_RIGHT" style="-fx-padding: 0 0 15 0;">
+            <Button text="📥 Export ke Excel" onAction="#handleExportExcel" styleClass="btn-primary" style="-fx-background-color: #00c853;"/>
+        </HBox>
     </VBox>
 
     <Separator/>

@@ -26,7 +26,7 @@
     </left>
 
     <center>
-        <VBox fx:id="contentArea" spacing="30" style="-fx-padding: 40;">
+        <VBox fx:id="contentArea" spacing="25" style="-fx-padding: 40;">
             <Label text="Selamat Datang di Portal Karyawan" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #304ffe;"/>
 
             <Separator/>
@@ -52,6 +52,14 @@
                     <Label fx:id="lblTotalCuti" text="-" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ff3d00;"/>
                 </VBox>
             </GridPane>
+
+            <VBox spacing="10" VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+                <Label text="Kalender Libur Nasional &amp; Cuti Bersama" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #d32f2f;"/>
+                <Separator style="-fx-padding: 5 0;"/>
+
+                <ListView fx:id="listKalenderLibur" prefHeight="200" style="-fx-background-radius: 5; -fx-border-color: #eeeeee; -fx-font-size: 14px;"/>
+            </VBox>
+
         </VBox>
     </center>
 </BorderPane>

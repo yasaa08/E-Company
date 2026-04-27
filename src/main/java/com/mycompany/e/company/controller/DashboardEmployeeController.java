@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView; // INI IMPORT YANG HILANG TADI
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -25,6 +26,7 @@ public class DashboardEmployeeController {
 
     @FXML private BorderPane mainBorderPane;
     @FXML private VBox contentArea;
+    @FXML private ListView<String> listKalenderLibur;
 
     // Label untuk statistik
     @FXML private Label lblUsername, lblJabatan, lblLokasi, lblStatusGaji, lblTotalCuti;
@@ -34,6 +36,22 @@ public class DashboardEmployeeController {
         if (lblUsername != null) {
             lblUsername.setText(UserSession.getUsername());
         }
+
+        // Pindahkan pengisian kalender ke sini agar langsung muncul saat aplikasi dibuka
+        if (listKalenderLibur != null) {
+            listKalenderLibur.getItems().clear();
+            listKalenderLibur.getItems().addAll(
+                    "🔴 1 Mei - Hari Buruh Internasional",
+                    "🔴 14 Mei - Kenaikan Isa Al Masih",
+                    "🔴 24 Mei - Hari Raya Waisak",
+                    "🔴 1 Juni - Hari Lahir Pancasila",
+                    "🔴 19 Juni - Tahun Baru Islam",
+                    "🔴 17 Agustus - Hari Kemerdekaan RI",
+                    "🔴 25 Desember - Hari Raya Natal",
+                    "🟢 (Dan cuti bersama lainnya sesuai SKB 3 Menteri)"
+            );
+        }
+
         loadEmployeeStats();
     }
 
@@ -48,7 +66,6 @@ public class DashboardEmployeeController {
             pstInfo.setInt(1, empId);
             ResultSet rsInfo = pstInfo.executeQuery();
             if (rsInfo.next()) {
-                // Pengecekan null agar tidak error jika UI FXML belum diupdate
                 if (lblJabatan != null) lblJabatan.setText(rsInfo.getString("position"));
                 if (lblLokasi != null) lblLokasi.setText(rsInfo.getString("region_name"));
             }
@@ -76,7 +93,7 @@ public class DashboardEmployeeController {
     }
 
     // =======================================================
-    // --- FUNGSI NAVIGASI TOMBOL (YANG SEMPAT HILANG) ---
+    // --- FUNGSI NAVIGASI TOMBOL ---
     // =======================================================
 
     @FXML

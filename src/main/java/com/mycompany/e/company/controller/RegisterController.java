@@ -13,16 +13,34 @@ import java.sql.*;
 public class RegisterController {
 
     @FXML private TextField txtCompanyName;
-    @FXML private TextArea txtCompanyAddress; // Baru
-    @FXML private ComboBox<String> cmbRegion; // Baru
+    @FXML private TextArea txtCompanyAddress;
+    @FXML private ComboBox<String> cmbRegion;
     @FXML private TextField txtAdminUser;
     @FXML private PasswordField txtAdminPass;
 
     @FXML
     public void initialize() {
-        // Isi Data Kota untuk UMR (Harusnya dari DB, ini hardcode simpel dulu biar jalan)
-        // Format: ID - Nama Kota
-        cmbRegion.getItems().addAll("1 - Bandung City", "2 - Jakarta", "3 - Surabaya");
+        // 1. Bersihkan combobox agar tidak ada sisa data lama
+        cmbRegion.getItems().clear();
+
+        // 2. Ambil data langsung dari Database Aiven
+        try (Connection conn = koneksi.configDB()) {
+            Statement stmt = conn.createStatement();
+
+            // Query untuk mengambil semua kota dan diurutkan sesuai abjad (A-Z)
+            ResultSet rs = stmt.executeQuery("SELECT region_id, region_name FROM regions ORDER BY region_name ASC");
+
+            while (rs.next()) {
+                int id = rs.getInt("region_id");
+                String nama = rs.getString("region_name");
+
+                // Masukkan ke combobox dengan format: "ID - Nama Kota"
+                cmbRegion.getItems().add(id + " - " + nama);
+            }
+        } catch (Exception e) {
+            System.err.println("Gagal memuat daftar kota: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -41,7 +59,7 @@ public class RegisterController {
         try {
             Connection conn = koneksi.configDB();
 
-            // Ambil ID Region (Split angka "1 - Bandung")
+            // Ambil ID Region (Memecah tulisan "1 - DKI Jakarta" mengambil angka 1)
             int regionId = Integer.parseInt(regionRaw.split(" - ")[0]);
 
             // 1. Simpan Company (Nama, Alamat, Region ID)
@@ -88,6 +106,12 @@ public class RegisterController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setContentText(content);
+        try {
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         alert.showAndWait();
     }
 }

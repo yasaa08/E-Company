@@ -6,6 +6,7 @@ import com.mycompany.e.company.model.Leave;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane; // INI IMPORT YANG KETINGGALAN
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -78,6 +79,12 @@ public class LeaveController implements Initializable {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
+        try {
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         alert.showAndWait();
     }
 }
