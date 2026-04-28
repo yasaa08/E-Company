@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manual Book — E-Company</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --blue-deep: #0d1b6e;
+    --blue-mid: #304ffe;
+    --blue-light: #e8ecff;
+    --blue-acc: #536dfe;
+    --green: #00c853;
+    --red: #d32f2f;
+    --orange: #ff6d00;
+    --bg: #f5f6fa;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --card-shadow: 0 4px 24px rgba(48,79,254,0.10);
+    --border: #e0e4ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .page-break { page-break-before: always; }
+    .no-print { display: none; }
+    body { background: white; }
+    .cover { background: var(--blue-deep) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .section-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--blue-deep);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 60px 40px;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(48,79,254,0.35) 0%, transparent 70%);
+    top: -200px; right: -200px;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,200,83,0.15) 0%, transparent 70%);
+    bottom: -100px; left: -100px;
+  }
+  .cover-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .cover-content { position: relative; z-index: 2; text-align: center; max-width: 700px; }
+  .cover-badge {
+    display: inline-block;
+    background: rgba(48,79,254,0.4);
+    border: 1px solid rgba(83,109,254,0.6);
+    color: #a5b4fc;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 32px;
+  }
+  .cover h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(52px, 8vw, 80px);
+    color: white;
+    line-height: 1.05;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+  }
+  .cover h1 span { color: #90caf9; font-style: italic; }
+  .cover-sub {
+    font-size: 18px;
+    color: #90caf9;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+  .cover-divider {
+    width: 80px; height: 3px;
+    background: linear-gradient(90deg, var(--blue-mid), var(--green));
+    margin: 0 auto 36px;
+    border-radius: 2px;
+  }
+  .cover-desc {
+    color: rgba(255,255,255,0.6);
+    font-size: 15px;
+    max-width: 460px;
+    margin: 0 auto 48px;
+    line-height: 1.8;
+  }
+  .cover-chips { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .chip {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #e2e8f0;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .cover-footer {
+    position: relative; z-index: 2;
+    margin-top: 80px;
+    color: rgba(255,255,255,0.3);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 60px 40px; }
+
+  /* ── TOC ── */
+  .toc-section { background: white; border-radius: 20px; padding: 50px; box-shadow: var(--card-shadow); margin-bottom: 60px; }
+  .toc-header { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; }
+  .toc-icon { width: 48px; height: 48px; background: var(--blue-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+  .toc-header h2 { font-size: 28px; font-weight: 700; color: var(--blue-deep); }
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .toc-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .toc-item:hover { border-color: var(--blue-mid); background: var(--blue-light); }
+  .toc-num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--blue-mid); font-weight: 600; min-width: 28px; }
+  .toc-label { font-weight: 600; font-size: 13px; }
+  .toc-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 70px; }
+  .section-header { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 2px solid var(--border); }
+  .section-badge {
+    background: var(--blue-deep);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+  .section-header h2 { font-size: 28px; font-weight: 700; color: var(--blue-deep); line-height: 1.2; }
+  .section-header p { color: var(--muted); margin-top: 6px; font-size: 14px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 20px;
+    border: 1.5px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--blue-light); }
+  .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 14px; color: var(--blue-deep); display: flex; align-items: center; gap: 10px; }
+  .card h3 .icon { font-size: 20px; }
+  .card p { color: var(--muted); line-height: 1.8; }
+
+  /* ── STEPS ── */
+  .steps { counter-reset: step; }
+  .step {
+    display: flex; gap: 20px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+  }
+  .step-num {
+    counter-increment: step;
+    width: 36px; height: 36px;
+    background: var(--blue-mid);
+    color: white;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+    flex-shrink: 0;
+  }
+  .step-body { flex: 1; padding-top: 4px; }
+  .step-body strong { display: block; font-size: 15px; color: var(--text); margin-bottom: 4px; }
+  .step-body p { font-size: 13px; color: var(--muted); }
+
+  /* ── UI MOCKUP ── */
+  .mockup {
+    background: #1e2035;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 24px 0;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  }
+  .mockup-bar { background: #2a2d45; padding: 12px 18px; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; } .dot-y { background: #ffbd2e; } .dot-g { background: #28c840; }
+  .mockup-title { color: rgba(255,255,255,0.4); font-size: 12px; margin-left: 8px; font-family: 'JetBrains Mono', monospace; }
+  .mockup-body { padding: 24px; }
+
+  /* ── FIELD ROW ── */
+  .field-row { display: flex; gap: 10px; margin-bottom: 12px; align-items: center; }
+  .field-label { color: rgba(255,255,255,0.5); font-size: 12px; width: 140px; flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+  .field-val { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: white; border-radius: 8px; padding: 8px 14px; flex: 1; font-size: 13px; }
+  .field-val.highlight { color: #69ff8c; font-weight: 700; font-size: 20px; background: rgba(0,200,83,0.1); border-color: rgba(0,200,83,0.3); }
+  .field-val.red { color: #ff8a80; background: rgba(211,47,47,0.1); border-color: rgba(211,47,47,0.3); }
+  .field-val.blue { color: #82b1ff; font-weight: 700; }
+
+  /* ── TABLE ── */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .data-table th { background: var(--blue-deep); color: white; padding: 11px 16px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
+  .data-table th:first-child { border-radius: 8px 0 0 0; }
+  .data-table th:last-child { border-radius: 0 8px 0 0; }
+  .data-table td { padding: 11px 16px; border-bottom: 1px solid var(--border); color: var(--text); }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:nth-child(even) td { background: #f8f9ff; }
+
+  /* ── BADGES ── */
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .badge-green { background: #e8f5e9; color: #2e7d32; }
+  .badge-red { background: #ffebee; color: #c62828; }
+  .badge-yellow { background: #fff8e1; color: #f57f17; }
+  .badge-blue { background: #e3f2fd; color: #1565c0; }
+
+  /* ── ALERT ── */
+  .alert { border-left: 4px solid; border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 18px 0; }
+  .alert-info { border-color: var(--blue-mid); background: var(--blue-light); }
+  .alert-warn { border-color: var(--orange); background: #fff3e0; }
+  .alert-success { border-color: var(--green); background: #e8f5e9; }
+  .alert strong { display: block; margin-bottom: 4px; font-size: 13px; }
+  .alert p { font-size: 13px; color: var(--muted); }
+
+  /* ── ROLE CARDS ── */
+  .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .role-card { border-radius: 16px; padding: 28px; position: relative; overflow: hidden; }
+  .role-card.admin { background: linear-gradient(135deg, #0d1b6e 0%, #304ffe 100%); color: white; }
+  .role-card.employee { background: linear-gradient(135deg, #1b5e20 0%, #00c853 100%); color: white; }
+  .role-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .role-card p { font-size: 13px; opacity: 0.8; margin-bottom: 16px; }
+  .role-card ul { list-style: none; }
+  .role-card ul li { padding: 5px 0; font-size: 13px; opacity: 0.9; }
+  .role-card ul li::before { content: '✓ '; font-weight: 700; }
+  .role-badge { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.15); border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 600; }
+
+  /* ── CALCULATION BOX ── */
+  .calc-box { background: var(--blue-deep); border-radius: 16px; padding: 28px; color: white; margin: 20px 0; }
+  .calc-box h4 { font-size: 14px; color: #90caf9; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; text-transform: uppercase; }
+  .calc-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 13px; }
+  .calc-row:last-child { border-bottom: none; }
+  .calc-row.total { padding-top: 14px; font-weight: 700; font-size: 16px; }
+  .calc-label { color: rgba(255,255,255,0.7); }
+  .calc-val { font-family: 'JetBrains Mono', monospace; }
+  .calc-val.plus { color: #69ff8c; }
+  .calc-val.minus { color: #ff8a80; }
+  .calc-val.result { color: #40c4ff; font-size: 20px; }
+
+  /* ── FEATURE GRID ── */
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .feature-item { background: white; border-radius: 14px; padding: 22px; text-align: center; border: 1.5px solid var(--border); transition: all 0.2s; }
+  .feature-item:hover { border-color: var(--blue-mid); transform: translateY(-2px); box-shadow: var(--card-shadow); }
+  .feature-icon { font-size: 32px; margin-bottom: 10px; }
+  .feature-title { font-weight: 700; font-size: 13px; color: var(--blue-deep); margin-bottom: 6px; }
+  .feature-desc { font-size: 12px; color: var(--muted); }
+
+  /* ── SIDEBAR MOCKUP ── */
+  .app-mockup { display: flex; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.2); margin: 24px 0; }
+  .sidebar-mock { background: var(--blue-deep); width: 180px; flex-shrink: 0; padding: 20px 0; }
+  .sidebar-mock-title { color: white; font-weight: 800; font-size: 16px; padding: 0 18px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 12px; }
+  .sidebar-btn { display: block; padding: 10px 18px; color: rgba(255,255,255,0.6); font-size: 12px; border: none; background: none; width: 100%; text-align: left; cursor: pointer; transition: all 0.15s; }
+  .sidebar-btn.active { background: rgba(48,79,254,0.5); color: white; font-weight: 600; }
+  .main-mock { background: #f5f6fa; flex: 1; padding: 24px; }
+  .mock-stat-row { display: flex; gap: 12px; margin-bottom: 16px; }
+  .mock-stat { background: white; border-radius: 12px; padding: 16px; flex: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .mock-stat-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .mock-stat-val { font-size: 18px; font-weight: 800; color: var(--blue-deep); }
+
+  /* ── DIVIDER ── */
+  .chapter-divider {
+    text-align: center;
+    margin: 80px 0 60px;
+    position: relative;
+  }
+  .chapter-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 1px;
+    background: var(--border);
+  }
+  .chapter-divider span {
+    position: relative;
+    background: var(--bg);
+    padding: 0 20px;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  .doc-footer { background: var(--blue-deep); color: rgba(255,255,255,0.5); text-align: center; padding: 40px; font-size: 12px; margin-top: 80px; }
+  .doc-footer strong { color: white; }
+
+  /* ── LIST ── */
+  ul.styled { padding-left: 0; list-style: none; }
+  ul.styled li { padding: 6px 0 6px 24px; position: relative; color: var(--muted); font-size: 13px; }
+  ul.styled li::before { content: '→'; position: absolute; left: 0; color: var(--blue-mid); font-weight: 700; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ COVER ══════════ -->
+<div class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-content">
+    <div class="cover-badge">📖 Buku Panduan Pengguna</div>
+    <h1>E-<span>Company</span></h1>
+    <div class="cover-sub">Sistem Manajemen Karyawan & Penggajian</div>
+    <div class="cover-divider"></div>
+    <p class="cover-desc">
+      Panduan lengkap penggunaan aplikasi desktop E-Company untuk mengelola data karyawan, proses penggajian, riwayat gaji, cuti & izin, serta laporan perusahaan secara efisien.
+    </p>
+    <div class="cover-chips">
+      <span class="chip"> Admin</span>
+      <span class="chip"> Karyawan</span>
+      <span class="chip"> Payroll</span>
+      <span class="chip"> Cuti & Izin</span>
+      <span class="chip"> Dashboard</span>
+    </div>
+  </div>
+  <div class="cover-footer">
+    E-Company &nbsp;·&nbsp; Versi 1.0 &nbsp;·&nbsp; Manual Book &nbsp;·&nbsp; 2026
+  </div>
+</div>
+
+<!-- ══════════ MAIN CONTENT ══════════ -->
+<div class="container">
+
+  <!-- ── DAFTAR ISI ── -->
+  <div class="toc-section" style="margin-top:60px;">
+    <div class="toc-header">
+      <div class="toc-icon">📋</div>
+      <h2>Daftar Isi</h2>
+    </div>
+    <div class="toc-grid">
+      <a class="toc-item" href="#overview">
+        <span class="toc-num">01</span>
+        <div><div class="toc-label">Pengenalan Aplikasi</div><div class="toc-desc">Apa itu E-Company & fitur utama</div></div>
+      </a>
+      <a class="toc-item" href="#login">
+        <span class="toc-num">02</span>
+        <div><div class="toc-label">Login & Register</div><div class="toc-desc">Masuk ke sistem & pendaftaran perusahaan</div></div>
+      </a>
+      <a class="toc-item" href="#dashboard-admin">
+        <span class="toc-num">03</span>
+        <div><div class="toc-label">Dashboard Admin</div><div class="toc-desc">Ringkasan data perusahaan</div></div>
+      </a>
+      <a class="toc-item" href="#data-karyawan">
+        <span class="toc-num">04</span>
+        <div><div class="toc-label">Data Karyawan</div><div class="toc-desc">Kelola data & profil karyawan</div></div>
+      </a>
+      <a class="toc-item" href="#payroll">
+        <span class="toc-num">05</span>
+        <div><div class="toc-label">Penggajian (Payroll)</div><div class="toc-desc">Proses gaji, BPJS & PPh 21</div></div>
+      </a>
+      <a class="toc-item" href="#riwayat">
+        <span class="toc-num">06</span>
+        <div><div class="toc-label">Riwayat Gaji</div><div class="toc-desc">Histori pembayaran gaji</div></div>
+      </a>
+      <a class="toc-item" href="#cuti">
+        <span class="toc-num">07</span>
+        <div><div class="toc-label">Cuti & Izin</div><div class="toc-desc">Persetujuan pengajuan cuti</div></div>
+      </a>
+      <a class="toc-item" href="#employee">
+        <span class="toc-num">08</span>
+        <div><div class="toc-label">Portal Karyawan</div><div class="toc-desc">Dashboard & pengajuan cuti karyawan</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══ 01 — OVERVIEW ══ -->
+  <div class="section" id="overview">
+    <div class="section-header">
+      <div class="section-badge">01</div>
+      <div>
+        <h2>Pengenalan Aplikasi E-Company</h2>
+        <p>Sistem manajemen SDM berbasis desktop untuk mempermudah pengelolaan karyawan dan penggajian.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon"></span> Apa itu E-Company?</h3>
+      <p>E-Company adalah aplikasi desktop manajemen perusahaan yang dirancang untuk membantu tim HR dan Admin dalam mengelola data karyawan, menghitung gaji secara otomatis, memantau status pembayaran gaji, serta mengelola pengajuan cuti dan izin karyawan. Aplikasi ini dibangun menggunakan teknologi JavaFX dengan database relasional.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <div class="feature-icon">👥</div>
+        <div class="feature-title">Data Karyawan</div>
+        <div class="feature-desc">Tambah, edit, hapus & lihat profil lengkap setiap karyawan</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💸</div>
+        <div class="feature-title">Payroll Otomatis</div>
+        <div class="feature-desc">Hitung gaji dengan potongan BPJS & PPh 21 secara real-time</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Dashboard Statistik</div>
+        <div class="feature-desc">Pantau UMR, total karyawan, dan ringkasan perusahaan</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🕐</div>
+        <div class="feature-title">Riwayat Gaji</div>
+        <div class="feature-desc">Lacak histori pembayaran setiap bulan per karyawan</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📅</div>
+        <div class="feature-title">Cuti & Izin</div>
+        <div class="feature-desc">Proses persetujuan pengajuan cuti karyawan dengan mudah</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔐</div>
+        <div class="feature-title">Multi-Role</div>
+        <div class="feature-desc">Akses berbeda untuk Admin dan Karyawan</div>
+      </div>
+    </div>
+
+    <div class="chapter-divider"><span>Persyaratan Sistem</span></div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3><span class="icon"></span> Kebutuhan Perangkat</h3>
+        <ul class="styled">
+          <li>Sistem Operasi: Windows 10/11, macOS, atau Linux</li>
+          <li>Java Runtime Environment (JRE) versi 11 atau lebih baru</li>
+          <li>RAM minimal 2 GB (4 GB direkomendasikan)</li>
+          <li>Ruang disk minimal 200 MB</li>
+          <li>Resolusi layar minimal 1280 × 720</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="icon"></span> Kebutuhan Database</h3>
+        <ul class="styled">
+          <li>MySQL Server versi 5.7 atau lebih baru</li>
+          <li>Koneksi database aktif sebelum menjalankan aplikasi</li>
+          <li>Konfigurasi host, port, user & password di file config</li>
+          <li>Database yang telah diimpor dengan skema awal</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 02 — LOGIN ══ -->
+  <div class="section page-break" id="login">
+    <div class="section-header">
+      <div class="section-badge">02</div>
+      <div>
+        <h2>Login & Register Perusahaan</h2>
+        <p>Proses masuk ke sistem dan pendaftaran perusahaan baru.</p>
+      </div>
+    </div>
+
+    <div class="role-grid">
+      <div class="role-card admin">
+        <span class="role-badge">ADMIN</span>
+        <h3> Akses Admin</h3>
+        <p>Pengelola penuh seluruh fitur sistem</p>
+        <ul>
+          <li>Kelola semua data karyawan</li>
+          <li>Proses penggajian bulanan</li>
+          <li>Lihat riwayat gaji seluruh karyawan</li>
+          <li>Setujui / tolak cuti karyawan</li>
+        </ul>
+      </div>
+      <div class="role-card employee">
+        <span class="role-badge">KARYAWAN</span>
+        <h3> Akses Karyawan</h3>
+        <p>Akses terbatas untuk data pribadi</p>
+        <ul>
+          <li>Lihat status gaji bulan ini</li>
+          <li>Lihat jabatan & lokasi kerja</li>
+          <li>Ajukan permohonan cuti</li>
+          <li>Pantau total cuti disetujui</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 24px;">
+      <h3><span class="icon"></span> Cara Login ke Aplikasi</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Buka Aplikasi E-Company</strong>
+            <p>Jalankan file aplikasi (.jar) atau shortcut di desktop. Halaman login akan muncul secara otomatis.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Masukkan Username & Password</strong>
+            <p>Ketik username dan password yang telah didaftarkan oleh admin perusahaan.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Pilih Role / Peran</strong>
+            <p>Klik dropdown <em>"Login Sebagai..."</em> dan pilih peran: <strong>Admin</strong> atau <strong>Employee</strong>. Pastikan role sesuai dengan akun Anda.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Klik Tombol LOGIN</strong>
+            <p>Sistem akan memverifikasi data dan mengarahkan ke dashboard sesuai role yang dipilih.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <div class="mockup-bar">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span class="mockup-title">LoginView — E-Company</span>
+      </div>
+      <div class="mockup-body">
+        <div style="max-width: 340px; margin: 0 auto; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 32px; border: 1px solid rgba(255,255,255,0.1);">
+          <div style="text-align:center; margin-bottom: 24px;">
+            <div style="font-size: 26px; font-weight: 800; color: #82b1ff; margin-bottom: 4px;">WELCOME</div>
+            <div style="color: rgba(255,255,255,0.4); font-size: 12px;">Please sign in to continue</div>
+          </div>
+          <div class="field-row"><input style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 14px;color:white;font-size:13px;outline:none;" placeholder="Username" value="admin_pt_maju"/></div>
+          <div class="field-row"><input type="password" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 14px;color:white;font-size:13px;outline:none;" placeholder="Password" value="••••••••"/></div>
+          <div class="field-row">
+            <select style="width:100%;background:rgba(48,79,254,0.3);border:1px solid rgba(48,79,254,0.6);border-radius:8px;padding:10px 14px;color:white;font-size:13px;outline:none;">
+              <option>Admin</option>
+            </select>
+          </div>
+          <div style="background: var(--blue-mid); border-radius: 8px; padding: 11px; text-align: center; color: white; font-weight: 700; font-size: 14px; margin-top: 12px;">LOGIN</div>
+          <div style="text-align: center; margin-top: 14px; color: #82b1ff; font-size: 12px;">Belum punya akun? Daftar disini</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <strong> Perhatian</strong>
+      <p>Jika login gagal, pastikan: (1) Username dan password benar, (2) Role yang dipilih sesuai dengan data di database, (3) Koneksi database aktif dan dapat dijangkau.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon"></span> Mendaftarkan Perusahaan Baru</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Klik "Daftar Disini" di halaman login</strong>
+            <p>Sistem akan membuka halaman Register Company.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Isi Data Perusahaan</strong>
+            <p>Masukkan: Nama Perusahaan, Alamat Lengkap, dan pilih Kota/Region (menentukan nilai UMR yang berlaku).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Buat Akun Admin</strong>
+            <p>Tentukan Username dan Password untuk akun admin utama perusahaan Anda.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Klik "DAFTAR SEKARANG"</strong>
+            <p>Perusahaan berhasil terdaftar. Anda dapat langsung login menggunakan akun yang dibuat.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 03 — DASHBOARD ADMIN ══ -->
+  <div class="section page-break" id="dashboard-admin">
+    <div class="section-header">
+      <div class="section-badge">03</div>
+      <div>
+        <h2>Dashboard Admin</h2>
+        <p>Halaman utama yang menampilkan ringkasan data perusahaan secara real-time.</p>
+      </div>
+    </div>
+
+    <div class="app-mockup">
+      <div class="sidebar-mock">
+        <div class="sidebar-mock-title">E-Company</div>
+        <span class="sidebar-btn active"> Dashboard</span>
+        <span class="sidebar-btn"> Data Karyawan</span>
+        <span class="sidebar-btn"> Penggajian</span>
+        <span class="sidebar-btn"> Riwayat Gaji</span>
+        <span class="sidebar-btn"> Cuti & Izin</span>
+        <div style="margin-top: 16px; padding: 10px 14px; background: rgba(255,255,255,0.07); border-radius: 8px; margin: 16px 12px 8px;">
+          <div style="color: rgba(255,255,255,0.4); font-size: 10px;">Logged in as:</div>
+          <div style="color: white; font-weight: 700; font-size: 13px;">PT. Maju Mundur</div>
+        </div>
+        <span class="sidebar-btn" style="color:#ff8a80;">🚪 Logout</span>
+      </div>
+      <div class="main-mock">
+        <div style="font-size: 20px; font-weight: 800; color: var(--blue-deep); margin-bottom: 16px;">Dashboard Overview</div>
+        <div class="mock-stat-row">
+          <div class="mock-stat">
+            <div class="mock-stat-label">UMR Live</div>
+            <div class="mock-stat-val" style="font-size: 14px; color: var(--green);">Rp 4.500.000</div>
+            <div style="font-size: 10px; color: var(--muted);">Kota Bandung</div>
+          </div>
+          <div class="mock-stat">
+            <div class="mock-stat-label">Total Karyawan Aktif</div>
+            <div class="mock-stat-val">24 Orang</div>
+            <div style="font-size: 10px; color: var(--muted);">Data Real-time</div>
+          </div>
+        </div>
+        <div style="background: white; border-radius: 10px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+          <div style="font-size: 13px; font-weight: 700; color: var(--blue-deep); margin-bottom: 10px;">Data Karyawan Terbaru</div>
+          <table style="width:100%; border-collapse:collapse; font-size: 11px;">
+            <tr style="background: var(--blue-light);">
+              <th style="padding: 6px 10px; text-align:left; color: var(--blue-deep);">Nama</th>
+              <th style="padding: 6px 10px; text-align:left; color: var(--blue-deep);">Jabatan</th>
+              <th style="padding: 6px 10px; text-align:left; color: var(--blue-deep);">Gaji Pokok</th>
+            </tr>
+            <tr><td style="padding:6px 10px;">Budi Santoso</td><td style="padding:6px 10px;">Developer</td><td style="padding:6px 10px;">Rp 6.500.000</td></tr>
+            <tr style="background:#f8f9ff"><td style="padding:6px 10px;">Siti Rahma</td><td style="padding:6px 10px;">Designer</td><td style="padding:6px 10px;">Rp 5.800.000</td></tr>
+            <tr><td style="padding:6px 10px;">Ahmad Fauzi</td><td style="padding:6px 10px;">HR Manager</td><td style="padding:6px 10px;">Rp 8.200.000</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3><span class="icon"></span> Komponen Dashboard</h3>
+        <ul class="styled">
+          <li><strong>UMR Live</strong> — Nilai UMR sesuai kota perusahaan terdaftar</li>
+          <li><strong>Total Karyawan Aktif</strong> — Jumlah karyawan terdaftar di perusahaan</li>
+          <li><strong>Tabel Karyawan</strong> — Preview daftar karyawan terkini</li>
+          <li><strong>Nama Perusahaan</strong> — Ditampilkan di sidebar bawah</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="icon"></span> Menu Navigasi Sidebar</h3>
+        <ul class="styled">
+          <li> <strong>Dashboard</strong> — Halaman ringkasan utama</li>
+          <li> <strong>Data Karyawan</strong> — Manajemen karyawan</li>
+          <li> <strong>Penggajian</strong> — Proses gaji bulanan</li>
+          <li> <strong>Riwayat Gaji</strong> — Histori pembayaran</li>
+          <li> <strong>Cuti & Izin</strong> — Persetujuan cuti</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="alert alert-info">
+      <strong> Tips</strong>
+      <p>Klik baris manapun pada tabel karyawan di Dashboard untuk langsung berpindah ke halaman Data Karyawan dan melihat detail lebih lanjut.</p>
+    </div>
+  </div>
+
+  <!-- ══ 04 — DATA KARYAWAN ══ -->
+  <div class="section page-break" id="data-karyawan">
+    <div class="section-header">
+      <div class="section-badge">04</div>
+      <div>
+        <h2>Manajemen Data Karyawan</h2>
+        <p>Kelola seluruh data karyawan: tambah, edit, hapus, dan lihat informasi lengkap.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon"></span> Informasi yang Tersimpan per Karyawan</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Kolom</th>
+            <th>Keterangan</th>
+            <th>Contoh</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Nama Lengkap</code></td><td>Nama lengkap karyawan</td><td>Budi Santoso</td></tr>
+          <tr><td><code>Jabatan</code></td><td>Posisi/jabatan di perusahaan</td><td>Software Developer</td></tr>
+          <tr><td><code>Status Pernikahan</code></td><td>Lajang / Menikah</td><td>Menikah</td></tr>
+          <tr><td><code>Tanggal Masuk</code></td><td>Tanggal mulai bekerja</td><td>2022-01-15</td></tr>
+          <tr><td><code>Gaji Pokok</code></td><td>Gaji dasar bulanan (Rupiah)</td><td>Rp 6.500.000</td></tr>
+          <tr><td><code>No. Rekening</code></td><td>Nomor rekening bank untuk transfer gaji</td><td>1234567890</td></tr>
+          <tr><td><code>No. WhatsApp</code></td><td>Nomor WA aktif karyawan</td><td>082112345678</td></tr>
+          <tr><td><code>Lokasi/Region</code></td><td>Kota tempat karyawan bekerja</td><td>Bandung</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon"></span> Menambahkan Karyawan Baru</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Klik tombol "+ Tambah Karyawan"</strong>
+            <p>Tombol berwarna biru di pojok kanan atas halaman Data Karyawan.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Isi formulir data karyawan</strong>
+            <p>Lengkapi semua field yang diperlukan: nama, jabatan, gaji pokok, no. rekening, no. WA, status pernikahan, tanggal masuk, dan region/lokasi.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Simpan data</strong>
+            <p>Klik tombol Simpan. Data karyawan baru akan langsung muncul di tabel.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3><span class="icon"></span> Edit Data Karyawan</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Klik baris karyawan di tabel</strong>
+              <p>Pilih karyawan yang datanya ingin diubah.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Klik tombol "✏ Edit Data"</strong>
+              <p>Form edit akan terbuka dengan data yang sudah terisi.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Ubah & simpan</strong>
+              <p>Edit field yang diperlukan lalu klik Simpan.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3><span class="icon">🗑️</span> Hapus Data Karyawan</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Pilih karyawan di tabel</strong>
+              <p>Klik baris karyawan yang ingin dihapus.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Klik tombol "✖ Hapus"</strong>
+              <p>Tombol merah di area atas tabel.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Konfirmasi penghapusan</strong>
+              <p>Sistem akan meminta konfirmasi sebelum menghapus.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <strong> Peringatan Hapus Data</strong>
+      <p>Menghapus data karyawan bersifat permanen dan tidak dapat dibatalkan. Pastikan data yang akan dihapus sudah tidak diperlukan dan tidak memiliki data gaji yang terkait.</p>
+    </div>
+  </div>
+
+  <!-- ══ 05 — PAYROLL ══ -->
+  <div class="section page-break" id="payroll">
+    <div class="section-header">
+      <div class="section-badge">05</div>
+      <div>
+        <h2>Penggajian (Payroll)</h2>
+        <p>Proses perhitungan dan pembayaran gaji karyawan dengan kalkulasi otomatis.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-info">
+      <strong>Tentang Modul Payroll</strong>
+      <p>Modul ini memungkinkan Admin menghitung gaji bersih karyawan secara otomatis berdasarkan gaji pokok, tunjangan tambahan, uang lembur, dikurangi potongan BPJS Kesehatan (3%) dan pajak PPh 21 yang dihitung secara progresif.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon"></span> Langkah Proses Penggajian</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Buka Menu "💸 Penggajian (Payroll)"</strong>
+            <p>Klik menu di sidebar kiri. Daftar semua karyawan akan tampil di panel kiri.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Pilih Karyawan dari Daftar</strong>
+            <p>Klik nama karyawan di panel kiri. Sistem otomatis mengisi gaji pokok dan nomor rekening.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Masukkan Tunjangan & Lembur (Opsional)</strong>
+            <p>Isi field "Tunjangan Tambahan" dan "Uang Lembur" jika ada. Total akan dihitung secara otomatis saat mengetik.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Verifikasi Rincian Gaji</strong>
+            <p>Periksa kalkulasi potongan BPJS, PPh 21, dan Total Take Home Pay yang muncul.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>Klik "✔ Bayar & Simpan Data"</strong>
+            <p>Data pembayaran tersimpan ke database dan status karyawan berubah menjadi "Sudah Dibayar".</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-box">
+      <h4> Formula Perhitungan Gaji</h4>
+      <div class="calc-row">
+        <span class="calc-label">Gaji Pokok</span>
+        <span class="calc-val plus">+ Rp 6.500.000</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Tunjangan Tambahan</span>
+        <span class="calc-val plus">+ Rp 500.000</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Uang Lembur</span>
+        <span class="calc-val plus">+ Rp 250.000</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Potongan BPJS Kesehatan (3%)</span>
+        <span class="calc-val minus">− Rp 195.000</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Potongan PPh 21 (Progresif)</span>
+        <span class="calc-val minus">− Rp 125.000</span>
+      </div>
+      <div class="calc-row total">
+        <span class="calc-label" style="color: #40c4ff; font-size: 14px;"> TOTAL TAKE HOME PAY</span>
+        <span class="calc-val result">= Rp 6.930.000</span>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3><span class="icon"></span> Potongan BPJS (3%)</h3>
+        <p style="font-size:13px;">BPJS Kesehatan dipotong sebesar <strong>3% dari gaji pokok</strong>. Potongan ini dihitung otomatis dan tidak bisa diubah secara manual.</p>
+        <div style="margin-top:12px; background: var(--blue-light); border-radius: 10px; padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--blue-deep);">
+          BPJS = Gaji Pokok × 3%
+        </div>
+      </div>
+      <div class="card">
+        <h3><span class="icon"></span> Pajak PPh 21</h3>
+        <p style="font-size:13px;">PPh 21 dihitung secara <strong>progresif</strong> sesuai aturan perpajakan Indonesia berdasarkan penghasilan kena pajak (PKP) tahunan karyawan.</p>
+        <ul class="styled" style="margin-top: 10px;">
+          <li>PKP ≤ 60 juta → 5%</li>
+          <li>60–250 juta → 15%</li>
+          <li>250–500 juta → 25%</li>
+          <li>> 500 juta → 30%</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <div class="mockup-bar">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span class="mockup-title">PayrollView — Rincian Gaji</span>
+      </div>
+      <div class="mockup-body" style="display:flex; gap: 20px;">
+        <div style="width: 180px; flex-shrink:0;">
+          <div style="color:rgba(255,255,255,0.5); font-size: 11px; margin-bottom: 10px;">Pilih Karyawan:</div>
+          <div style="background: rgba(48,79,254,0.4); border: 1px solid var(--blue-mid); border-radius: 8px; padding: 10px 14px; color: white; font-size: 12px; margin-bottom: 6px; cursor: pointer;">● Budi Santoso</div>
+          <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 10px 14px; color: rgba(255,255,255,0.5); font-size: 12px; margin-bottom: 6px;">Siti Rahma</div>
+          <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 10px 14px; color: rgba(255,255,255,0.5); font-size: 12px;">Ahmad Fauzi</div>
+        </div>
+        <div style="flex:1;">
+          <div style="color:#82b1ff; font-size: 14px; font-weight: 700; margin-bottom: 16px;">Budi Santoso</div>
+          <div class="field-row"><span class="field-label">Gaji Pokok</span><span class="field-val">Rp 6.500.000</span></div>
+          <div class="field-row"><span class="field-label">Tunjangan</span><span class="field-val">Rp 500.000</span></div>
+          <div class="field-row"><span class="field-label">Lembur</span><span class="field-val">Rp 250.000</span></div>
+          <div class="field-row"><span class="field-label">BPJS (3%)</span><span class="field-val red">- Rp 195.000</span></div>
+          <div class="field-row"><span class="field-label">PPh 21</span><span class="field-val red">- Rp 125.000</span></div>
+          <div class="field-row"><span class="field-label">Rekening</span><span class="field-val blue">BCA - 1234567890</span></div>
+          <div style="background: rgba(0,200,83,0.12); border: 1px solid rgba(0,200,83,0.3); border-radius: 10px; padding: 14px 18px; margin-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #82b1ff; font-weight: 700; font-size: 12px;">TOTAL TAKE HOME PAY</span>
+            <span style="color: #69ff8c; font-weight: 800; font-size: 22px; font-family: 'JetBrains Mono', monospace;">Rp 6.930.000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 06 — RIWAYAT GAJI ══ -->
+  <div class="section page-break" id="riwayat">
+    <div class="section-header">
+      <div class="section-badge">06</div>
+      <div>
+        <h2>Riwayat Gaji</h2>
+        <p>Pantau histori pembayaran gaji seluruh karyawan berdasarkan periode bulan/tahun.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon"></span> Menggunakan Riwayat Gaji</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Klik " Riwayat Gaji" di sidebar</strong>
+            <p>Halaman riwayat gaji akan terbuka, menampilkan daftar semua pembayaran gaji yang pernah dilakukan.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Filter berdasarkan periode</strong>
+            <p>Gunakan filter bulan/tahun untuk menampilkan data gaji pada periode tertentu.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Analisis data pembayaran</strong>
+            <p>Lihat detail gaji tiap karyawan termasuk komponen gaji, potongan, dan total take home pay.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon"></span> Contoh Data Riwayat Gaji</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Nama Karyawan</th>
+            <th>Periode</th>
+            <th>Gaji Pokok</th>
+            <th>Take Home Pay</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Budi Santoso</td>
+            <td>Desember 2024</td>
+            <td>Rp 6.500.000</td>
+            <td>Rp 6.930.000</td>
+            <td><span class="badge badge-green">✔ Dibayar</span></td>
+          </tr>
+          <tr>
+            <td>Siti Rahma</td>
+            <td>Desember 2024</td>
+            <td>Rp 5.800.000</td>
+            <td>Rp 6.100.000</td>
+            <td><span class="badge badge-green">✔ Dibayar</span></td>
+          </tr>
+          <tr>
+            <td>Ahmad Fauzi</td>
+            <td>Desember 2024</td>
+            <td>Rp 8.200.000</td>
+            <td>Rp 8.600.000</td>
+            <td><span class="badge badge-yellow">⏳ Pending</span></td>
+          </tr>
+          <tr>
+            <td>Dewi Lestari</td>
+            <td>November 2024</td>
+            <td>Rp 4.800.000</td>
+            <td>Rp 5.100.000</td>
+            <td><span class="badge badge-green">✔ Dibayar</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two-col">
+      <div class="alert alert-success" style="margin: 0;">
+        <strong>✔ Status: Sudah Dibayar</strong>
+        <p>Karyawan yang gajinya sudah diproses melalui modul Payroll pada periode tersebut.</p>
+      </div>
+      <div class="alert alert-warn" style="margin: 0;">
+        <strong>⏳ Status: Belum Dibayar</strong>
+        <p>Karyawan yang gajinya belum diproses untuk periode bulan berjalan.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 07 — CUTI ══ -->
+  <div class="section page-break" id="cuti">
+    <div class="section-header">
+      <div class="section-badge">07</div>
+      <div>
+        <h2>Cuti & Izin (Persetujuan Admin)</h2>
+        <p>Kelola pengajuan cuti karyawan: setujui atau tolak permohonan yang masuk.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon"></span> Informasi Pengajuan Cuti</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Kolom</th><th>Keterangan</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Nama Karyawan</td><td>Nama karyawan yang mengajukan cuti</td></tr>
+          <tr><td>Jenis Cuti</td><td>Cuti tahunan, sakit, melahirkan, dll.</td></tr>
+          <tr><td>Tanggal Mulai</td><td>Tanggal pertama karyawan cuti</td></tr>
+          <tr><td>Tanggal Selesai</td><td>Tanggal terakhir karyawan cuti</td></tr>
+          <tr><td>Alasan</td><td>Keterangan atau alasan pengajuan cuti</td></tr>
+          <tr><td>Status</td><td>Pending / Approved / Rejected</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3><span class="icon">✅</span> Menyetujui Cuti</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Buka menu " Cuti & Izin"</strong>
+              <p>Daftar pengajuan cuti masuk akan tampil.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Pilih pengajuan di tabel</strong>
+              <p>Klik baris pengajuan yang akan diproses.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Klik "✔ Setujui Pengajuan"</strong>
+              <p>Status berubah menjadi <span class="badge badge-green">Approved</span>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3><span class="icon">❌</span> Menolak Cuti</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Pilih pengajuan di tabel</strong>
+              <p>Klik baris pengajuan yang akan ditolak.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Klik "✖ Tolak Pengajuan"</strong>
+              <p>Tombol merah di bawah tabel.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Status diperbarui</strong>
+              <p>Status berubah menjadi <span class="badge badge-red">Rejected</span>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px;">
+      <h3><span class="icon">📅</span> Kalender Hari Libur Nasional (Referensi)</h3>
+      <p style="margin-bottom: 14px; font-size: 13px;">Aplikasi menampilkan referensi hari libur nasional Indonesia yang dapat dijadikan panduan dalam memproses pengajuan cuti:</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+        <div style="background: #fff5f5; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #c62828;">🔴 1 Mei — Hari Buruh Internasional</div>
+        <div style="background: #fff5f5; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #c62828;">🔴 14 Mei — Kenaikan Isa Al Masih</div>
+        <div style="background: #fff5f5; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #c62828;">🔴 1 Juni — Hari Lahir Pancasila</div>
+        <div style="background: #fff5f5; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #c62828;">🔴 17 Agustus — Hari Kemerdekaan RI</div>
+        <div style="background: #fff5f5; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #c62828;">🔴 25 Desember — Hari Raya Natal</div>
+        <div style="background: #f0fff4; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #2e7d32;">🟢 Dan cuti bersama lainnya (SKB 3 Menteri)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 08 — PORTAL KARYAWAN ══ -->
+  <div class="section page-break" id="employee">
+    <div class="section-header">
+      <div class="section-badge">08</div>
+      <div>
+        <h2>Portal Karyawan (Employee Dashboard)</h2>
+        <p>Tampilan khusus karyawan untuk memantau status gaji dan mengajukan cuti.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-info">
+      <strong>👤 Akses Karyawan</strong>
+      <p>Karyawan login menggunakan role "Employee" dan mendapatkan tampilan dashboard yang lebih sederhana, terfokus pada data pribadi masing-masing.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">📊</span> Informasi di Dashboard Karyawan</h3>
+      <table class="data-table">
+        <thead><tr><th>Informasi</th><th>Keterangan</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>👤 Username</td>
+            <td>Nama pengguna yang sedang login, ditampilkan di bagian atas</td>
+          </tr>
+          <tr>
+            <td>💼 Jabatan</td>
+            <td>Posisi/jabatan karyawan di perusahaan</td>
+          </tr>
+          <tr>
+            <td>📍 Lokasi Kerja</td>
+            <td>Kota/region tempat karyawan bekerja</td>
+          </tr>
+          <tr>
+            <td>💰 Status Gaji Bulan Ini</td>
+            <td><span class="badge badge-green">✔ Sudah Dibayar</span> atau <span class="badge badge-yellow">⏳ Belum Dibayar</span></td>
+          </tr>
+          <tr>
+            <td>📅 Total Cuti Disetujui</td>
+            <td>Jumlah pengajuan cuti yang telah disetujui Admin</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">📝</span> Mengajukan Cuti / Izin</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Klik menu "Pengajuan Cuti"</strong>
+            <p>Terdapat di sidebar atau menu navigasi dashboard karyawan.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Isi formulir pengajuan</strong>
+            <p>Pilih jenis cuti, tanggal mulai, tanggal selesai, dan tuliskan alasan pengajuan Anda dengan jelas.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Kirim pengajuan</strong>
+            <p>Klik Kirim / Submit. Pengajuan akan masuk ke daftar Admin untuk disetujui atau ditolak.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Pantau status pengajuan</strong>
+            <p>Status cuti Anda (Pending/Approved/Rejected) dapat dipantau melalui dashboard.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3><span class="icon">✅</span> Status Pengajuan Cuti</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 6px;">
+          <div style="display:flex; align-items:center; gap: 12px;">
+            <span class="badge badge-yellow">⏳ Pending</span>
+            <span style="font-size: 13px; color: var(--muted);">Menunggu persetujuan Admin</span>
+          </div>
+          <div style="display:flex; align-items:center; gap: 12px;">
+            <span class="badge badge-green">✔ Approved</span>
+            <span style="font-size: 13px; color: var(--muted);">Cuti telah disetujui Admin</span>
+          </div>
+          <div style="display:flex; align-items:center; gap: 12px;">
+            <span class="badge badge-red">✖ Rejected</span>
+            <span style="font-size: 13px; color: var(--muted);">Cuti ditolak Admin</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3><span class="icon">💡</span> Tips untuk Karyawan</h3>
+        <ul class="styled">
+          <li>Pastikan alasan cuti ditulis dengan jelas dan lengkap</li>
+          <li>Ajukan cuti minimal 2–3 hari sebelum tanggal yang direncanakan</li>
+          <li>Pantau status gaji setiap akhir bulan</li>
+          <li>Hubungi Admin jika ada kendala dengan status gaji</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FAQ ══ -->
+  <div class="section page-break">
+    <div class="section-header">
+      <div class="section-badge">FAQ</div>
+      <div>
+        <h2>Pertanyaan yang Sering Diajukan</h2>
+        <p>Solusi untuk masalah umum yang ditemui pengguna.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="icon">❓</span> Login gagal meskipun password benar</h3>
+      <p>Pastikan <strong>Role</strong> yang dipilih di dropdown sesuai dengan role akun Anda di database. Akun Admin tidak bisa login dengan role Employee, dan sebaliknya. Juga pastikan koneksi database aktif.</p>
+    </div>
+    <div class="card">
+      <h3><span class="icon">❓</span> Gaji karyawan sudah dibayar tapi status masih "Belum Dibayar"</h3>
+      <p>Pastikan proses "Bayar & Simpan Data" benar-benar di-klik dan tidak ada pesan error. Status diperbarui real-time — coba refresh dengan berpindah menu lalu kembali ke Dashboard.</p>
+    </div>
+    <div class="card">
+      <h3><span class="icon">❓</span> Potongan PPh 21 terasa terlalu besar atau kecil</h3>
+      <p>PPh 21 dihitung berdasarkan penghasilan kena pajak <strong>tahunan</strong>. Karyawan dengan gaji di atas PTKP (Penghasilan Tidak Kena Pajak) akan dikenakan tarif progresif. Pastikan data gaji pokok sudah benar.</p>
+    </div>
+    <div class="card">
+      <h3><span class="icon">❓</span> Karyawan tidak muncul di daftar Payroll</h3>
+      <p>Pastikan data karyawan sudah ditambahkan melalui menu "Data Karyawan" dan informasi lengkap termasuk gaji pokok dan nomor rekening sudah terisi.</p>
+    </div>
+    <div class="card">
+      <h3><span class="icon">❓</span> Aplikasi tidak bisa terhubung ke database</h3>
+      <p>Periksa konfigurasi koneksi database (host, port, username, password) di file konfigurasi aplikasi. Pastikan MySQL Server berjalan dan port tidak diblokir firewall.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="doc-footer">
+  <strong>E-Company</strong> — Sistem Manajemen Karyawan & Penggajian<br/>
+  Manual Book v1.0 &nbsp;·&nbsp; Hak cipta dilindungi &nbsp;·&nbsp; 2024<br/><br/>
+  <span style="font-size: 11px; opacity: 0.6;">Untuk pertanyaan lebih lanjut, hubungi administrator sistem Anda.</span>
+</div>
+
+</body>
+</html>
